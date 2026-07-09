@@ -72,16 +72,16 @@
 		<guava.version>31.0.1-jre</guava.version>
 		<lombok.version>1.18.46</lombok.version>
 		<reactor.version>3.4.12</reactor.version>
-		<slf4j.version>2.1.0</slf4j.version>
+		<slf4j.version>2.0.18</slf4j.version>
 		<!-- Plugin versions -->
-		<maven-compiler-plugin.version>4.0.0</maven-compiler-plugin.version>
+		<maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
 		<maven-enforcer-plugin.version>3.6.3</maven-enforcer-plugin.version>
 		<maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
-		<maven-jar-plugin.version>4.0.0</maven-jar-plugin.version>
+		<maven-jar-plugin.version>3.5.0</maven-jar-plugin.version>
 		<maven-release-plugin.version>3.3.1</maven-release-plugin.version>
-		<maven-resources-plugin.version>4.0.0</maven-resources-plugin.version>
-		<maven-surefire-plugin.version>3.6.0</maven-surefire-plugin.version>
-		<maven-source-plugin.version>4.0.0</maven-source-plugin.version>
+		<maven-resources-plugin.version>3.5.0</maven-resources-plugin.version>
+		<maven-surefire-plugin.version>3.5.6</maven-surefire-plugin.version>
+		<maven-source-plugin.version>3.4.0</maven-source-plugin.version>
 		<maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
 		<maven-nexus-staging-plugin.version>1.6.8</maven-nexus-staging-plugin.version>
 	</properties>
