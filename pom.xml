@@ -5,7 +5,7 @@
 
 	<groupId>io.github.hiwepy</groupId>
 	<artifactId>spring-data-redis-extension</artifactId>
-	<description>Redis Operation Template SDK (Spring Boot Independent)</description>
+	<description>Spring Data Redis Extensions - independent of Spring Boot, JDK 21 line</description>
 	<version>3.0.x.20260630-SNAPSHOT</version>
 	<name>${project.groupId}:${project.artifactId}</name>
 	<url>https://github.com/hiwepy/${project.artifactId}</url>
@@ -63,7 +63,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
+		<java.version>21</java.version>
+		<maven.compiler.release>${java.version}</maven.compiler.release>
 		<maven.version>3.0</maven.version>
 		<!-- Dependency versions -->
 		<spring-data-bom.version>2021.2.18</spring-data-bom.version>
