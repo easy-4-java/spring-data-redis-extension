@@ -1,4 +1,4 @@
-package io.github.hiwepy.redistpl.core;
+package io.github.easy4j.redistpl.core;
 
 /**
  * Redis 缓存 Key 常量定义抽象类。

@@ -1,4 +1,4 @@
-package io.github.hiwepy.redistpl.core.connection;
+package io.github.easy4j.redistpl.core.connection;
 
 import org.springframework.data.redis.connection.MessageListener;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
