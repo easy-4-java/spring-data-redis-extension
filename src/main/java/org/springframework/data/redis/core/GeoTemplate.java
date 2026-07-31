@@ -1,6 +1,6 @@
 package org.springframework.data.redis.core;
 
-import io.github.hiwepy.redistpl.core.RedisKey;
+import io.github.easy4j.redistpl.core.RedisKey;
 import lombok.extern.slf4j.Slf4j;
 import org.gavaghan.geodesy.Ellipsoid;
 import org.gavaghan.geodesy.GeodeticCalculator;
