@@ -1,4 +1,4 @@
-package io.github.hiwepy.redistpl.core.annotation;
+package io.github.easy4j.redistpl.core.annotation;
 
 import java.lang.annotation.*;
 

@@ -1,9 +1,9 @@
 package org.springframework.data.redis.core;
 
-import io.github.hiwepy.redistpl.core.MapUtils;
-import io.github.hiwepy.redistpl.core.RedisKey;
-import io.github.hiwepy.redistpl.core.RedisLua;
-import io.github.hiwepy.redistpl.core.RedisOperationException;
+import io.github.easy4j.redistpl.core.MapUtils;
+import io.github.easy4j.redistpl.core.RedisKey;
+import io.github.easy4j.redistpl.core.RedisLua;
+import io.github.easy4j.redistpl.core.RedisOperationException;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;

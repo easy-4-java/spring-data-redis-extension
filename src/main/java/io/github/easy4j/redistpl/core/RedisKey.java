@@ -1,4 +1,4 @@
-package io.github.hiwepy.redistpl.core;
+package io.github.easy4j.redistpl.core;
 
 import org.springframework.util.StringUtils;
 
