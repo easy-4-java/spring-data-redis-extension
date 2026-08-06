@@ -52,7 +52,8 @@
 
     <!-- 版本属性定义：Java 版本、依赖版本与 Maven 插件版本统一管理 -->
     <properties>
-        <central-publishing-maven-plugin.version>0.11.0</central-publishing-maven-plugin.version>
+                <junit-jupiter.version>6.1.0</junit-jupiter.version>
+<central-publishing-maven-plugin.version>0.11.0</central-publishing-maven-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>21</java.version>
