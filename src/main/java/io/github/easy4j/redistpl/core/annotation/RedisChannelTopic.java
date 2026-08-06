@@ -11,7 +11,7 @@ import java.lang.annotation.*;
  * 配合 Spring 的 {@link org.springframework.data.redis.listener.RedisMessageListenerContainer} 使用，
  * 容器启动时会自动扫描带有此注解的监听器，并将其注册到对应的频道。
  *
- * @author wandl
+ * @author [@Loong Wan](https://github.com/loong10k)
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

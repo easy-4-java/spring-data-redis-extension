@@ -26,7 +26,7 @@ import java.util.function.Function;
  *   <li>坐标系距离计算：支持 Sphere 和 WGS84 两种坐标系</li>
  * </ul>
  *
- * @author wandl
+ * @author [@Loong Wan](https://github.com/loong10k)
  * @see GeoTemplate
  * @see RedisKey#GEO_LOCATION_KEY
  */

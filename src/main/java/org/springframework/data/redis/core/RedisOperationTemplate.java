@@ -57,7 +57,7 @@ import java.util.stream.Stream;
  *   <li>大 Key 的 Scan 扫描删除方法</li>
  * </ul>
  *
- * @author wandl
+ * @author [@Loong Wan](https://github.com/loong10k)
  * @see RedisLua
  * @see RedisKey
  */

@@ -14,7 +14,7 @@ import java.util.function.Function;
  * <p>
  * Key 生成格式为：{@code rds:模块:参数1:参数2:...}，各部分之间使用冒号(:)分隔。
  *
- * @author wandl
+ * @author [@Loong Wan](https://github.com/loong10k)
  * @see RedisKeyConstant
  */
 public enum RedisKey {
