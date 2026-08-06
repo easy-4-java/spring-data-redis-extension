@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  * <p>
  * 默认使用 {@link RedisKey#GEO_LOCATION_KEY} 作为地理位置数据的 Redis Key。
  *
- * @author wandl
+ * @author [@Loong Wan](https://github.com/loong10k)
  * @see RedisKey#GEO_LOCATION_KEY
  */
 @Slf4j

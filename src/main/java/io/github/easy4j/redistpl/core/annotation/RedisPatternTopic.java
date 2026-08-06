@@ -11,7 +11,7 @@ import java.lang.annotation.*;
  * 与 {@link RedisChannelTopic} 不同，本注解支持通配符模式匹配（如 {@code news.*}），
  * 可以同时订阅多个匹配的频道。
  *
- * @author wandl
+ * @author [@Loong Wan](https://github.com/loong10k)
  * @see RedisChannelTopic
  */
 @Target(ElementType.TYPE)

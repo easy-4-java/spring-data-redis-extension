@@ -53,7 +53,7 @@ import java.util.stream.Stream;
  *   <li>Lock（分布式锁）：基于 Lua 脚本的分布式锁实现</li>
  * </ul>
  *
- * @author wandl
+ * @author [@Loong Wan](https://github.com/loong10k)
  * @see RedisOperationTemplate
  * @see RedisLua
  */

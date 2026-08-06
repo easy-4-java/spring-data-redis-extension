@@ -8,7 +8,7 @@ import org.springframework.dao.NonTransientDataAccessException;
  * 继承自 {@link NonTransientDataAccessException}，表示该异常不是由临时性问题引起的，
  * 重试操作通常不会成功。
  *
- * @author wandl
+ * @author [@Loong Wan](https://github.com/loong10k)
  */
 @SuppressWarnings("serial")
 public class RedisOperationException extends NonTransientDataAccessException {

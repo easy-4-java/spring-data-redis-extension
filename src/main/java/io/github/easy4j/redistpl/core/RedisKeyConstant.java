@@ -6,7 +6,7 @@ package io.github.easy4j.redistpl.core;
  * 集中管理各类业务场景对应的 Redis 缓存 Key 前缀常量，
  * 配合 {@link RedisKey} 枚举使用，实现缓存 Key 的统一规范管理。
  *
- * @author wandl
+ * @author [@Loong Wan](https://github.com/loong10k)
  */
 public abstract class RedisKeyConstant {
 

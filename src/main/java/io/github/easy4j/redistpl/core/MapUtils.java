@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * Map 工具类，提供对 Map 操作的空安全便捷方法。
  *
- * @author wandl
+ * @author [@Loong Wan](https://github.com/loong10k)
  */
 public class MapUtils {
 
