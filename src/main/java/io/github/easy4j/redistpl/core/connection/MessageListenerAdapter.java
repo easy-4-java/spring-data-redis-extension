@@ -9,11 +9,11 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
  * 扩展自 Spring 的 {@link MessageListener}，增加了对 {@link RedisMessageListenerContainer} 的感知能力。
  * 实现此接口的监听器可以获取到所属的容器实例，便于在消息处理过程中进行容器级别的操作。
  * <p>
- * 配合 {@link io.github.hiwepy.redistpl.core.annotation.RedisChannelTopic} 和
- * {@link io.github.hiwepy.redistpl.core.annotation.RedisPatternTopic} 注解使用，
+ * 配合 {@link io.github.easy4j.redistpl.core.annotation.RedisChannelTopic} 和
+ * {@link io.github.easy4j.redistpl.core.annotation.RedisPatternTopic} 注解使用，
  * 实现声明式的 Redis 消息订阅。
  *
- * @author wandl
+ * @author [@Loong Wan](https://github.com/loong10k)
  */
 public interface MessageListenerAdapter extends MessageListener {
 
