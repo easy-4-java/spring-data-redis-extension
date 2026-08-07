@@ -4,6 +4,8 @@
 
 [![Java](https://img.shields.io/badge/Java-17-orange)](https://github.com/easy-4-java/spring-data-redis-extension) [![License](https://img.shields.io/badge/license-Apache%202.0-green)](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
+spring-data-redis-extension（"Redis Operation Template SDK"）是 Spring Data Redis 的配套库，独立于 Spring Boot。
+
 ## 目录
 
 - [1. Project Overview](#1-project-overview)
