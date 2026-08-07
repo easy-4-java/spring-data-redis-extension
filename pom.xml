@@ -129,21 +129,6 @@
                 <artifactId>slf4j-api</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
-            <!-- For Spring Data -->
-            <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-redis</artifactId>
-            </dependency>
-            <!-- For Spring Framework -->
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-tx</artifactId>
-            </dependency>
-            <!-- For Spring Framework -->
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-context</artifactId>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
