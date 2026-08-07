@@ -53,7 +53,7 @@
     <!-- 版本属性定义：Java 版本、依赖版本与 Maven 插件版本统一管理 -->
     <properties>
                 <junit-jupiter.version>6.1.0</junit-jupiter.version>
-<central-publishing-maven-plugin.version>0.11.0</central-publishing-maven-plugin.version>
+<central-maven-publishing-plugin.version>0.11.0</central-maven-publishing-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>21</java.version>
@@ -77,7 +77,7 @@
         <maven-source-plugin.version>3.4.0</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.11.2</maven-javadoc-plugin.version>
         <maven-nexus-staging-plugin.version>1.7.0</maven-nexus-staging-plugin.version>
-        <jacoco-maven-plugin.version>0.8.15</jacoco-maven-plugin.version>
+        <maven-jacoco-plugin.version>0.8.15</maven-jacoco-plugin.version>
     </properties>
 
     <!-- 依赖版本统一管理（dependencyManagement） -->
@@ -295,7 +295,7 @@
                 <!-- 覆盖率插件：生成覆盖率报告并校验测试覆盖率（目标 90%） -->
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${jacoco-maven-plugin.version}</version>
+                <version>${maven-jacoco-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
@@ -450,7 +450,7 @@
                         <!-- 发布插件：将制品发布到 Maven Central Portal -->
                         <groupId>org.sonatype.central</groupId>
                         <artifactId>central-publishing-maven-plugin</artifactId>
-                        <version>${central-publishing-maven-plugin.version}</version>
+                        <version>${central-maven-publishing-plugin.version}</version>
                         <extensions>true</extensions>
                         <configuration>
                             <publishingServerId>central</publishingServerId>
