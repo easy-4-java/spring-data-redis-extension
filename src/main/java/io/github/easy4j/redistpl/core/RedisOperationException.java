@@ -3,30 +3,37 @@ package io.github.easy4j.redistpl.core;
 import org.springframework.dao.NonTransientDataAccessException;
 
 /**
- * Redis 操作异常类，用于封装 Redis 操作过程中发生的非瞬态数据访问异常。
- * <p>
- * 继承自 {@link NonTransientDataAccessException}，表示该异常不是由临时性问题引起的，
- * 重试操作通常不会成功。
+ * Unchecked exception thrown when a Redis operation performed by one of the
+ * {@code spring-data-redis-extension} templates fails irrecoverably.
+ *
+ * <p>The exception extends Spring's {@link NonTransientDataAccessException} so
+ * it is treated as a non-transient failure by Spring's exception translation
+ * layer. Retrying the same operation without addressing the underlying cause
+ * (for example a serialization mismatch, a connection timeout, or an invalid
+ * Lua script) is unlikely to succeed.</p>
  *
  * @author [@Loong Wan](https://github.com/loong10k)
+ * @since 3.0.0
+ * @see NonTransientDataAccessException
  */
 @SuppressWarnings("serial")
 public class RedisOperationException extends NonTransientDataAccessException {
 
 	/**
-	 * 构造一个包含错误信息和原因的 Redis 操作异常
+	 * Builds a new {@link RedisOperationException} that wraps the supplied
+	 * cause.
 	 *
-	 * @param msg   错误信息
-	 * @param cause 异常原因
+	 * @param msg   the human-readable detail message; may be {@code null}
+	 * @param cause the underlying cause; may be {@code null}
 	 */
 	public RedisOperationException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
 	/**
-	 * 构造一个仅包含错误信息的 Redis 操作异常
+	 * Builds a new {@link RedisOperationException} with only a detail message.
 	 *
-	 * @param msg 错误信息
+	 * @param msg the human-readable detail message; may be {@code null}
 	 */
 	public RedisOperationException(String msg) {
 		super(msg);

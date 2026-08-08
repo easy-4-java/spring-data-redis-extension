@@ -38,22 +38,25 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * 响应式 Redis 操作模板类，基于 {@link ReactiveRedisTemplate} 的封装。
- * <p>
- * 提供了基于 Project Reactor 的响应式 Redis 操作方法，所有返回值均为 {@link reactor.core.publisher.Mono}
- * 或 {@link reactor.core.publisher.Flux}，适用于 WebFlux 等响应式编程场景。
- * <p>
- * 功能覆盖与 {@link RedisOperationTemplate} 对应，包括：
+ * Reactive counterpart of {@link RedisOperationTemplate}, built on top of
+ * Spring Data Redis' {@link ReactiveRedisTemplate}.
+ *
+ * <p>Every method returns a Project Reactor {@link reactor.core.publisher.Mono}
+ * or {@link reactor.core.publisher.Flux}, which makes the template suitable for
+ * WebFlux-style applications and other reactive runtimes. The exposed feature
+ * surface mirrors {@link RedisOperationTemplate}:</p>
  * <ul>
- *   <li>String（字符串）：set/get/incr/decr 等</li>
- *   <li>Hash（哈希）：hSet/hGet/hmSet/hmGet 等</li>
- *   <li>List（列表）：lPush/rPush/lPop/rPop/lRange 等</li>
- *   <li>Set（集合）：sAdd/sRemove/sMembers 等</li>
- *   <li>ZSet（有序集合）：zAdd/zRange/zRank 等</li>
- *   <li>Lock（分布式锁）：基于 Lua 脚本的分布式锁实现</li>
+ *   <li>String values: {@code set}, {@code get}, {@code incr}, {@code decr}.</li>
+ *   <li>Hashes: {@code hSet}, {@code hGet}, {@code hmSet}, {@code hmGet}.</li>
+ *   <li>Lists: {@code lPush}, {@code rPush}, {@code lPop}, {@code rPop},
+ *       {@code lRange}.</li>
+ *   <li>Sets: {@code sAdd}, {@code sRemove}, {@code sMembers}.</li>
+ *   <li>Sorted sets: {@code zAdd}, {@code zRange}, {@code zRank}.</li>
+ *   <li>Lua-script backed distributed-lock primitives.</li>
  * </ul>
  *
  * @author [@Loong Wan](https://github.com/loong10k)
+ * @since 3.0.0
  * @see RedisOperationTemplate
  * @see RedisLua
  */
