@@ -3,15 +3,21 @@ package io.github.easy4j.redistpl.core.annotation;
 import java.lang.annotation.*;
 
 /**
- * Redis 模式订阅主题注解。
- * <p>
- * 标注在 {@link org.springframework.data.redis.connection.MessageListener} 实现类上，
- * 用于声明该监听器订阅的 Redis Pattern（模式匹配）主题。
- * <p>
- * 与 {@link RedisChannelTopic} 不同，本注解支持通配符模式匹配（如 {@code news.*}），
- * 可以同时订阅多个匹配的频道。
+ * Declares the Redis <em>pattern</em> topic a
+ * {@link org.springframework.data.redis.connection.MessageListener}
+ * implementation subscribes to.
+ *
+ * <p>Unlike {@link RedisChannelTopic}, which binds a listener to a single
+ * fixed channel, this annotation supports wildcard patterns (for example
+ * {@code "news.*"} or {@code "order:*"}) so the same listener can receive
+ * messages from every channel that matches the pattern.</p>
+ *
+ * <p>The annotation is intended to be detected at container startup by a
+ * scanner that automatically registers the annotated listener with the
+ * project's {@link org.springframework.data.redis.listener.RedisMessageListenerContainer}.</p>
  *
  * @author [@Loong Wan](https://github.com/loong10k)
+ * @since 3.0.0
  * @see RedisChannelTopic
  */
 @Target(ElementType.TYPE)
@@ -21,9 +27,10 @@ import java.lang.annotation.*;
 public @interface RedisPatternTopic {
 
 	/**
-	 * Redis 频道匹配模式，支持通配符（如 {@code news.*}、{@code order:*}）
+	 * The Redis channel-matching pattern to subscribe to. Supports wildcards
+	 * such as {@code "news.*"} and {@code "order:*"}.
 	 *
-	 * @return 频道匹配模式
+	 * @return the pattern string; never {@code null} or empty when used
 	 */
 	String value();
 
