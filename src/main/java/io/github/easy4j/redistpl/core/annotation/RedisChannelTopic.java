@@ -3,15 +3,20 @@ package io.github.easy4j.redistpl.core.annotation;
 import java.lang.annotation.*;
 
 /**
- * Redis 频道订阅主题注解。
- * <p>
- * 标注在 {@link org.springframework.data.redis.connection.MessageListener} 实现类上，
- * 用于声明该监听器订阅的 Redis Channel（频道）名称。
- * <p>
- * 配合 Spring 的 {@link org.springframework.data.redis.listener.RedisMessageListenerContainer} 使用，
- * 容器启动时会自动扫描带有此注解的监听器，并将其注册到对应的频道。
+ * Declares the Redis <em>channel</em> topic a
+ * {@link org.springframework.data.redis.connection.MessageListener}
+ * implementation subscribes to.
+ *
+ * <p>When the surrounding
+ * {@link org.springframework.data.redis.listener.RedisMessageListenerContainer}
+ * starts, the framework scans for listeners annotated with this type and
+ * registers each one against the channel named by {@link #value()}.</p>
+ *
+ * <p>For wildcard matching use {@link RedisPatternTopic} instead.</p>
  *
  * @author [@Loong Wan](https://github.com/loong10k)
+ * @since 3.0.0
+ * @see RedisPatternTopic
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
@@ -20,9 +25,9 @@ import java.lang.annotation.*;
 public @interface RedisChannelTopic {
 
 	/**
-	 * Redis 频道名称
+	 * The exact Redis channel name to subscribe to.
 	 *
-	 * @return 频道名称
+	 * @return the channel name; never {@code null} or empty when used
 	 */
 	String value();
 
