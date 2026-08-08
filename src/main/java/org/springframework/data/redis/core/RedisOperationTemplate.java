@@ -34,30 +34,36 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Redis 操作模板类，基于 {@link RedisTemplate} 的二次封装。
- * <p>
- * 提供了更丰富、更便捷的 Redis 操作方法，涵盖以下数据结构：
+ * Rich wrapper around Spring Data Redis' {@link RedisTemplate} that exposes
+ * a higher-level, more developer-friendly API for the most common Redis
+ * operations.
+ *
+ * <p>The template covers the following data structures:</p>
  * <ul>
- *   <li>String（字符串）：set/get/incr/decr 等</li>
- *   <li>Hash（哈希）：hSet/hGet/hmSet/hmGet 等</li>
- *   <li>List（列表）：lPush/rPush/lPop/rPop/lRange 等</li>
- *   <li>Set（集合）：sAdd/sRemove/sMembers/sDiff 等</li>
- *   <li>ZSet（有序集合）：zAdd/zRange/zRank 等</li>
- *   <li>Geo（地理位置）：geoAdd/geoDistance/geoRadius 等</li>
- *   <li>Lock（分布式锁）：基于 Lua 脚本的 setNx + pexpire 实现</li>
- *   <li>Pub/Sub（发布订阅）：基于注解的频道/模式订阅</li>
+ *   <li>String values: {@code set}, {@code get}, {@code incr}, {@code decr}.</li>
+ *   <li>Hashes: {@code hSet}, {@code hGet}, {@code hmSet}, {@code hmGet}.</li>
+ *   <li>Lists: {@code lPush}, {@code rPush}, {@code lPop}, {@code rPop},
+ *       {@code lRange}.</li>
+ *   <li>Sets: {@code sAdd}, {@code sRemove}, {@code sMembers}, {@code sDiff}.</li>
+ *   <li>Sorted sets: {@code zAdd}, {@code zRange}, {@code zRank}.</li>
+ *   <li>Geo: {@code geoAdd}, {@code geoDistance}, {@code geoRadius}.</li>
+ *   <li>Distributed locks built on Lua-script-backed {@code setNx + pexpire}.</li>
+ *   <li>Pub/Sub backed by annotation-driven channel/pattern subscriptions.</li>
  * </ul>
- * <p>
- * 相比原生 {@link RedisOperationTemplate}，本模板额外提供了：
+ *
+ * <p>Above the plain {@link RedisTemplate}, the template adds:</p>
  * <ul>
- *   <li>类型安全的 get 方法（getString/getDouble/getLong/getInteger）</li>
- *   <li>批量操作的 mGet 系列方法</li>
- *   <li>基于 Lua 脚本的库存扣减（incr/decr/div）操作</li>
- *   <li>分布式锁的加锁/解锁方法</li>
- *   <li>大 Key 的 Scan 扫描删除方法</li>
+ *   <li>Type-safe value getters ({@code getString}, {@code getDouble},
+ *       {@code getLong}, {@code getInteger}).</li>
+ *   <li>Batch getters ({@code mGet} family) with type conversion.</li>
+ *   <li>Lua-script backed stock-keeping primitives
+ *       ({@code incr}, {@code decr}, {@code div}).</li>
+ *   <li>Distributed-lock acquire/release helpers.</li>
+ *   <li>SCAN-based helpers for removing large keys without blocking Redis.</li>
  * </ul>
  *
  * @author [@Loong Wan](https://github.com/loong10k)
+ * @since 3.0.0
  * @see RedisLua
  * @see RedisKey
  */

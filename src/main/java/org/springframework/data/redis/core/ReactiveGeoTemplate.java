@@ -15,37 +15,51 @@ import reactor.core.publisher.Flux;
 import java.util.function.Function;
 
 /**
- * 响应式 Redis 地理位置操作模板类，基于 {@link ReactiveRedisTemplate} 的 Geo 操作封装。
- * <p>
- * 提供了基于 Project Reactor 的响应式地理位置操作方法，适用于 WebFlux 等响应式编程场景。
- * 功能包括：
+ * Reactive counterpart of {@link GeoTemplate}, wrapping a
+ * {@link ReactiveRedisTemplate} and returning Project Reactor publishers for
+ * every geo-aware operation.
+ *
+ * <p>The class is intended for WebFlux-style applications and exposes:</p>
  * <ul>
- *   <li>坐标设置：{@link #setLocation(String, double, double)}</li>
- *   <li>距离计算：{@link #distance(String, String)}、{@link #getDistance(double, double, double, double)}</li>
- *   <li>范围查询：{@link #getCircleUsersByDistance(String, double, Function)}</li>
- *   <li>坐标系距离计算：支持 Sphere 和 WGS84 两种坐标系</li>
+ *   <li>Coordinate registration via {@link #setLocation(String, double, double)}.</li>
+ *   <li>Distance calculation between two user identifiers
+ *       ({@link #distance(String, String)}) and helper methods that reuse the
+ *       same geodesy helpers as {@link GeoTemplate}.</li>
+ *   <li>Geo-radius queries via
+ *       {@link #getCircleUsersByDistance(String, double, Function)}.</li>
  * </ul>
  *
+ * <p>The default storage key is {@link RedisKey#GEO_LOCATION_KEY}.</p>
+ *
  * @author [@Loong Wan](https://github.com/loong10k)
+ * @since 3.0.0
  * @see GeoTemplate
  * @see RedisKey#GEO_LOCATION_KEY
  */
 public class ReactiveGeoTemplate {
 
+	/** The default Redis key used by every operation on this template. */
 	private final static String USER_GEO_KEY = RedisKey.GEO_LOCATION_KEY.getKey();
+
+	/** Backing reactive Redis template; may be {@code null} until injected. */
 	private ReactiveRedisTemplate<Object, Object> reactiveRedisTemplate;
 
 	/**
-	 * 无参构造方法（需后续手动设置 ReactiveRedisTemplate）
+	 * No-arg constructor. The underlying
+	 * {@link ReactiveRedisTemplate} must be supplied via the
+	 * {@link #ReactiveGeoTemplate(ReactiveRedisTemplate)} constructor or by an
+	 * external setter before any operation is invoked.
 	 */
 	public ReactiveGeoTemplate() {
 		super();
 	}
 
 	/**
-	 * 构造 ReactiveGeoTemplate 实例
+	 * Builds a {@link ReactiveGeoTemplate} backed by the supplied reactive
+	 * Redis template.
 	 *
-	 * @param reactiveRedisTemplate 响应式 RedisTemplate 实例
+	 * @param reactiveRedisTemplate the reactive template; may be {@code null}
+	 *                              and injected later via a setter
 	 */
 	public ReactiveGeoTemplate(ReactiveRedisTemplate<Object, Object> reactiveRedisTemplate) {
 		super();
@@ -53,12 +67,15 @@ public class ReactiveGeoTemplate {
 	}
 
 	/**
-	 * 计算两点之间距离 https://www.cnblogs.com/zhaoyanhaoBlog/p/10121499.html
-	 * @param longitude1	：坐标1经度
-	 * @param latitude1		：坐标1维度
-	 * @param longitude2	：坐标2经度
-	 * @param latitude2		：坐标2维度
-	 * @return 计算结果（单位：米）
+	 * Computes the great-circle distance between two coordinates using a
+	 * simplified spherical model with the Earth mean radius of {@code 6371 km}.
+	 *
+	 * @param latitude1  the latitude of the first point, in degrees
+	 * @param longitude1 the longitude of the first point, in degrees
+	 * @param latitude2  the latitude of the second point, in degrees
+	 * @param longitude2 the longitude of the second point, in degrees
+	 * @return the distance between the points in metres
+	 * @see <a href="https://www.cnblogs.com/zhaoyanhaoBlog/p/10121499.html">Reference</a>
 	 */
 	public double getDistance(double latitude1, double longitude1, double latitude2, double longitude2) {
 
@@ -68,15 +85,10 @@ public class ReactiveGeoTemplate {
 		double lon1 = (Math.PI / 180) * longitude1;
 		double lon2 = (Math.PI / 180) * longitude2;
 
-//      double Lat1r = (Math.PI/180)*(gp1.getLatitudeE6()/1E6);
-//      double Lat2r = (Math.PI/180)*(gp2.getLatitudeE6()/1E6);
-//      double Lon1r = (Math.PI/180)*(gp1.getLongitudeE6()/1E6);
-//      double Lon2r = (Math.PI/180)*(gp2.getLongitudeE6()/1E6);
-
-		// 地球半径
+		// Earth radius in kilometres.
 		double R = 6371;
 
-		// 两点间距离 km，如果想要米的话，结果*1000就可以了
+		// Distance between the points in kilometres; multiply by 1000 for metres.
 		double d = Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1))
 				* R;
 
@@ -84,122 +96,138 @@ public class ReactiveGeoTemplate {
 	}
 
 	/**
-	 * 1、计算Sphere模式下两个坐标点的距离（单位：米）
-	 * @param longitude1	：坐标1经度
-	 * @param latitude1		：坐标1维度
-	 * @param longitude2	：坐标2经度
-	 * @param latitude2		：坐标2维度
-	 * @return 计算结果（单位：米）
+	 * Computes the geodetic distance between two coordinates using the
+	 * {@link Ellipsoid#Sphere} model.
+	 *
+	 * @param latitude1  the latitude of the first point, in degrees
+	 * @param longitude1 the longitude of the first point, in degrees
+	 * @param latitude2  the latitude of the second point, in degrees
+	 * @param longitude2 the longitude of the second point, in degrees
+	 * @return the distance between the points in metres
 	 */
 	public double getSphereDistance(double latitude1, double longitude1, double latitude2, double longitude2) {
 		return this.getDistance(Ellipsoid.Sphere, latitude1, longitude1, latitude2, longitude2);
 	}
 
 	/**
-	 * 2、计算WGS84模式下两个坐标点的距离（单位：米）
-	 * @param longitude1	：坐标1经度
-	 * @param latitude1		：坐标1维度
-	 * @param longitude2	：坐标2经度
-	 * @param latitude2		：坐标2维度
-	 * @return	计算结果（单位：米）
+	 * Computes the geodetic distance between two coordinates using the
+	 * {@link Ellipsoid#WGS84} model.
+	 *
+	 * @param latitude1  the latitude of the first point, in degrees
+	 * @param longitude1 the longitude of the first point, in degrees
+	 * @param latitude2  the latitude of the second point, in degrees
+	 * @param longitude2 the longitude of the second point, in degrees
+	 * @return the distance between the points in metres
 	 */
 	public double getWGS84Distance(double latitude1, double longitude1, double latitude2, double longitude2) {
 	    return this.getDistance(Ellipsoid.WGS84, latitude1, longitude1, latitude2, longitude2);
 	}
 
 	/**
-	 * 2、计算指定模式下两个坐标点的距离（单位：米）
-	 * @param ellipsoid	：计算坐标的模式
-	 * @param longitude1	：坐标1经度
-	 * @param latitude1		：坐标1维度
-	 * @param longitude2	：坐标2经度
-	 * @param latitude2		：坐标2维度
-	 * @return	计算结果（单位：米）
+	 * Computes the geodetic distance between two coordinates using a caller
+	 * supplied {@link Ellipsoid} model.
+	 *
+	 * @param ellipsoid  the ellipsoid model to use (e.g. {@link Ellipsoid#Sphere}
+	 *                   or {@link Ellipsoid#WGS84}); must not be {@code null}
+	 * @param latitude1  the latitude of the first point, in degrees
+	 * @param longitude1 the longitude of the first point, in degrees
+	 * @param latitude2  the latitude of the second point, in degrees
+	 * @param longitude2 the longitude of the second point, in degrees
+	 * @return the distance between the points in metres
 	 */
 	public double getDistance(Ellipsoid ellipsoid, double latitude1, double longitude1, double latitude2, double longitude2) {
 
-		// 1、此处可以传入起始点经纬度
+		// Origin coordinates.
 		GlobalCoordinates gpsFrom = new GlobalCoordinates(latitude1, longitude1);
 
-		// 2、此处可以传入目标点经纬度
+		// Destination coordinates.
 		GlobalCoordinates gpsTo = new GlobalCoordinates(latitude2, longitude2);
 
-	    // 3、调用计算方法，传入坐标系、经纬度用于计算距离
+	    // Delegate to the geodesy library using the caller supplied ellipsoid.
 	    return this.getDistance(gpsFrom, gpsTo, ellipsoid);
 
 	}
 
+	/**
+	 * Computes the geodetic distance between two pre-built
+	 * {@link GlobalCoordinates}.
+	 *
+	 * @param gpsFrom   the origin coordinates; must not be {@code null}
+	 * @param gpsTo     the destination coordinates; must not be {@code null}
+	 * @param ellipsoid the ellipsoid model to use; must not be {@code null}
+	 * @return the ellipsoidal distance in metres
+	 */
 	public double getDistance(GlobalCoordinates gpsFrom, GlobalCoordinates gpsTo, Ellipsoid ellipsoid){
 
-        // 1、创建GeodeticCalculator，调用计算方法，传入坐标系、经纬度用于计算距离
+        // Run the geodesy calculation and return the ellipsoidal distance.
         GeodeticCurve geoCurve = new GeodeticCalculator().calculateGeodeticCurve(ellipsoid, gpsFrom, gpsTo);
 
-        // 2、获取计算结果
+        // Return the ellipsoidal distance (in metres).
         return geoCurve.getEllipsoidalDistance();
     }
 
 
     /**
+     * Registers (or updates) {@code uid}'s latest coordinates against the
+     * default user-geolocation key.
      *
-     * @param uid 用户ID
-     * @param longitude  用户最新位置经度
-     * @param latitude  用户最新位置纬度
+     * @param uid       the user identifier; must not be {@code null}
+     * @param longitude the new longitude, in degrees
+     * @param latitude  the new latitude, in degrees
      */
     public void setLocation(String uid, double longitude, double latitude) {
-    	// 例：89 118.803805,32.060168
+    	// Example: 89 -> 118.803805, 32.060168.
         Point point = new Point(longitude, latitude);
         getReactiveRedisTemplate().opsForGeo().add(USER_GEO_KEY, point, uid);
     }
 
+    /**
+     * Returns the distance between two user identifiers as a formatted
+     * {@code "<value><unit>"} string. The call blocks until the underlying
+     * {@link Mono} completes.
+     *
+     * @param uid1 the first user identifier; must not be {@code null}
+     * @param uid2 the second user identifier; must not be {@code null}
+     * @return a {@code "<value><unit>"} string, or {@code null} if Redis
+     *         returned no distance
+     */
     public String distance(String uid1, String uid2) {
-    	// 例：89 118.803805,32.060168
+    	// Example: 89 -> 118.803805, 32.060168.
     	return getReactiveRedisTemplate().opsForGeo().distance(USER_GEO_KEY, uid1, uid2)
     			.map(obj -> String.valueOf(obj.getValue() + obj.getUnit()))
 				.cast(String.class)
 				.block();
     }
 
+    /**
+     * Returns every geo entry located within {@code distance} metres of
+     * {@code uid}'s coordinates, applying {@code mapper} to each result.
+     *
+     * @param <T>      the mapper's output type
+     * @param uid      the user identifier whose location anchors the search
+     * @param distance the radius of the search
+     * @param mapper   function applied to every result; must not be
+     *                 {@code null}
+     * @return a {@link Flux} emitting the mapped results; never {@code null}
+     */
     public <T> Flux<T> getCircleUsersByDistance(String uid, double distance, Function<GeoResult<GeoLocation<Object>>, T> mapper){
-    	 // 1.1、设置geo查询参数
+    	 // Build geo-radius arguments (include coordinates + distance, sort ascending).
         RedisGeoCommands.GeoRadiusCommandArgs geoRadiusArgs = RedisGeoCommands.GeoRadiusCommandArgs.newGeoRadiusArgs();
-        // 1.2、查询返回结果包括距离和坐标
         geoRadiusArgs = geoRadiusArgs.includeCoordinates().includeDistance();
-        // 1.3、按查询出的坐标距离中心坐标的距离进行排序
         geoRadiusArgs.sortAscending();
 
-        // 2、根据给定地理位置获取指定范围内的地理位置集合
+        // Issue the radius query and apply the caller supplied mapper.
         return getReactiveRedisTemplate().opsForGeo()
         		  .radius(USER_GEO_KEY, uid, new Distance(distance), geoRadiusArgs)
        					.map(geoResult -> mapper.apply(geoResult));
     }
-    /*
-    public <T> List<T> getCircleUsersByRadius(String uid, double radius, Function<GeoResult<GeoLocation<Object>>, T> mapper){
-
-
-    	// 1、根据UID查询指定UID对应坐标点指定范围内的用户
-        Circle within = new Circle(boundGeoOperations.position(uid).get(0), radius);
-        // 1.1、设置geo查询参数
-        RedisGeoCommands.GeoRadiusCommandArgs geoRadiusArgs = RedisGeoCommands.GeoRadiusCommandArgs.newGeoRadiusArgs();
-        // 1.2、查询返回结果包括距离和坐标
-        geoRadiusArgs = geoRadiusArgs.includeCoordinates().includeDistance();
-        // 1.3、按查询出的坐标距离中心坐标的距离进行排序
-        geoRadiusArgs.sortAscending();
-        //geoRadiusArgs.limit(limit);
-        // 2、执行查询操作
-        GeoResults<GeoLocation<Object>> geoResults = boundGeoOperations.radius(within, geoRadiusArgs);
-
-        // 3、解析结果判断
-        List<GeoResult<GeoLocation<Object>>> geoResultList = geoResults.getContent();
-        if (CollectionUtils.isEmpty(geoResultList)) {
-			return new ArrayList<>();
-		}
-    	return geoResultList.stream().map(mapper).collect(Collectors.toList());
-    }*/
 
 	/**
-	 * 获取底层响应式 RedisTemplate 实例
+	 * Returns the underlying {@link ReactiveRedisTemplate} used by this
+	 * template.
 	 *
-	 * @return ReactiveRedisTemplate 实例
+	 * @return the reactive template; may be {@code null} when no template has
+	 *         been injected
 	 */
     public ReactiveRedisTemplate<Object, Object> getReactiveRedisTemplate() {
 		return reactiveRedisTemplate;

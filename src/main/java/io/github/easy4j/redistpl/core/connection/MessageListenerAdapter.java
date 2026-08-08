@@ -4,23 +4,32 @@ import org.springframework.data.redis.connection.MessageListener;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 
 /**
- * Redis 消息监听器适配器接口。
- * <p>
- * 扩展自 Spring 的 {@link MessageListener}，增加了对 {@link RedisMessageListenerContainer} 的感知能力。
- * 实现此接口的监听器可以获取到所属的容器实例，便于在消息处理过程中进行容器级别的操作。
- * <p>
- * 配合 {@link io.github.easy4j.redistpl.core.annotation.RedisChannelTopic} 和
- * {@link io.github.easy4j.redistpl.core.annotation.RedisPatternTopic} 注解使用，
- * 实现声明式的 Redis 消息订阅。
+ * Extension of Spring's {@link MessageListener} contract that lets a listener
+ * discover the {@link RedisMessageListenerContainer} it has been registered
+ * with.
+ *
+ * <p>Implementations gain the ability to interact with their owning container
+ * &mdash; for example, to dynamically add or remove additional subscriptions
+ * during message processing. The framework injects the container reference via
+ * {@link #setMessageListenerContainer(RedisMessageListenerContainer)} during
+ * listener registration.</p>
+ *
+ * <p>Together with {@link io.github.easy4j.redistpl.core.annotation.RedisChannelTopic}
+ * and {@link io.github.easy4j.redistpl.core.annotation.RedisPatternTopic} this
+ * adapter enables declarative Redis pub/sub configuration.</p>
  *
  * @author [@Loong Wan](https://github.com/loong10k)
+ * @since 3.0.0
+ * @see MessageListener
+ * @see RedisMessageListenerContainer
  */
 public interface MessageListenerAdapter extends MessageListener {
 
     /**
-     * 设置消息监听器所属的 Redis 消息监听容器
+     * Stores the container that owns this listener.
      *
-     * @param container Redis 消息监听容器实例
+     * @param container the {@link RedisMessageListenerContainer} that has
+     *                  registered this listener; must not be {@code null}
      */
     void setMessageListenerContainer(RedisMessageListenerContainer container);
 
