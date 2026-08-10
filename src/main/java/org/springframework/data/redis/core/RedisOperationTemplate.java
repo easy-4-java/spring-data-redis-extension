@@ -62,7 +62,7 @@ import java.util.stream.Stream;
  *   <li>SCAN-based helpers for removing large keys without blocking Redis.</li>
  * </ul>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 3.0.0
  * @see RedisLua
  * @see RedisKey

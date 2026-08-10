@@ -14,7 +14,7 @@ package io.github.easy4j.redistpl.core;
  * <p>This class is {@code abstract} and cannot be instantiated &mdash; it only
  * exposes {@code public static final} string fields.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 3.0.0
  * @see RedisKey
  * @see RedisKey#getKeyStr(Object...)

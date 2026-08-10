@@ -16,7 +16,7 @@ import java.lang.annotation.*;
  * scanner that automatically registers the annotated listener with the
  * project's {@link org.springframework.data.redis.listener.RedisMessageListenerContainer}.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 3.0.0
  * @see RedisChannelTopic
  */

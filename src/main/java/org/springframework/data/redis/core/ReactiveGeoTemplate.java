@@ -31,7 +31,7 @@ import java.util.function.Function;
  *
  * <p>The default storage key is {@link RedisKey#GEO_LOCATION_KEY}.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 3.0.0
  * @see GeoTemplate
  * @see RedisKey#GEO_LOCATION_KEY

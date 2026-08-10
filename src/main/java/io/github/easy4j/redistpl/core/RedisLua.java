@@ -14,7 +14,7 @@ package io.github.easy4j.redistpl.core;
  *
  * <p>Reference: <a href="https://www.233tw.com/lua/7033">https://www.233tw.com/lua/7033</a>.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 3.0.0
  */
 public class RedisLua {

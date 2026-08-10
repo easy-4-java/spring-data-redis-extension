@@ -14,7 +14,7 @@ import java.lang.annotation.*;
  *
  * <p>For wildcard matching use {@link RedisPatternTopic} instead.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 3.0.0
  * @see RedisPatternTopic
  */

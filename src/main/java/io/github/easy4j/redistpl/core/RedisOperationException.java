@@ -12,7 +12,7 @@ import org.springframework.dao.NonTransientDataAccessException;
  * (for example a serialization mismatch, a connection timeout, or an invalid
  * Lua script) is unlikely to succeed.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 3.0.0
  * @see NonTransientDataAccessException
  */
