@@ -55,7 +55,7 @@ import java.util.stream.Stream;
  *   <li>Lua-script backed distributed-lock primitives.</li>
  * </ul>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 3.0.0
  * @see RedisOperationTemplate
  * @see RedisLua

@@ -23,7 +23,7 @@ import java.util.function.Function;
  * automatically by {@link #getKeyStr(Object...)}. {@code null} or blank
  * arguments are skipped.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 3.0.0
  * @see RedisKeyConstant
  * @see RedisKey#getKeyStr(Object...)

@@ -18,7 +18,7 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
  * and {@link io.github.easy4j.redistpl.core.annotation.RedisPatternTopic} this
  * adapter enables declarative Redis pub/sub configuration.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 3.0.0
  * @see MessageListener
  * @see RedisMessageListenerContainer

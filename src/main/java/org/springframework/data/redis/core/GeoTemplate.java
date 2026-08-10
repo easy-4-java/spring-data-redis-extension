@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
  * passed to {@code RedisTemplate.boundGeoOps} when the template is
  * constructed.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 3.0.0
  * @see RedisKey#GEO_LOCATION_KEY
  */

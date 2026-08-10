@@ -12,7 +12,7 @@ import java.util.Map;
  * {@code MapUtils.getString} contract so call sites that were previously
  * written against that API can keep working unchanged.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 3.0.0
  */
 public class MapUtils {
