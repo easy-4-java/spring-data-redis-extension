@@ -45,6 +45,7 @@
         <geodesy.version>1.1.3</geodesy.version>
         <guava.version>31.0.1-jre</guava.version>
         <junit-jupiter.version>6.1.0</junit-jupiter.version>
+        <mockito.version>5.3.1</mockito.version>
         <lombok.version>1.18.46</lombok.version>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <reactor.version>3.4.12</reactor.version>
@@ -158,6 +159,18 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit-jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <!-- 构建 Profile 配置 -->

@@ -1924,13 +1924,13 @@ class RedisOperationTemplateTest {
 
     @Test
     void shouldThrowWhenHIncrFails() {
-        when(hashOps.increment(anyString(), any(), anyInt())).thenThrow(new RuntimeException("error"));
+        when(hashOps.increment(anyString(), any(), anyLong())).thenThrow(new RuntimeException("error"));
         assertThrows(RedisOperationException.class, () -> template.hIncr("key", "field", 1));
     }
 
     @Test
     void shouldThrowWhenHDecrFails() {
-        when(hashOps.increment(anyString(), any(), anyInt())).thenThrow(new RuntimeException("error"));
+        when(hashOps.increment(anyString(), any(), anyLong())).thenThrow(new RuntimeException("error"));
         assertThrows(RedisOperationException.class, () -> template.hDecr("key", "field", 1));
     }
 
@@ -1948,7 +1948,7 @@ class RedisOperationTemplateTest {
 
     @Test
     void shouldThrowWhenSHasKeyFails() {
-        when(setOps.isMember(anyString(), any())).thenThrow(new RuntimeException("error"));
+        when(setOps.isMember("key", "value")).thenThrow(new RuntimeException("error"));
         assertThrows(RedisOperationException.class, () -> template.sHasKey("key", "value"));
     }
 
@@ -1990,7 +1990,7 @@ class RedisOperationTemplateTest {
 
     @Test
     void shouldThrowWhenZScoreFails() {
-        when(zSetOps.score(anyString(), any())).thenThrow(new RuntimeException("error"));
+        when(zSetOps.score("key", "value")).thenThrow(new RuntimeException("error"));
         assertThrows(RedisOperationException.class, () -> template.zScore("key", "value"));
     }
 
@@ -2086,7 +2086,7 @@ class RedisOperationTemplateTest {
 
     @Test
     void shouldThrowWhenKeysFails() {
-        when(redisTemplate.scan(any(ScanOptions.class))).thenThrow(new RuntimeException("error"));
+        when(redisTemplate.execute(any(RedisCallback.class))).thenThrow(new RuntimeException("error"));
         assertThrows(RedisOperationException.class, () -> template.keys("pattern"));
     }
 }
